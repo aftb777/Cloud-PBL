@@ -110,3 +110,9 @@ AI Analysis Results
 
 **Aftaab Mulla**
 **Atharva Mote**
+
+---
+
+## Credits 
+
+https://github.com/rogerio-app
