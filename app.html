@@ -7,19 +7,51 @@
   </head>
 
   <body>
-    <hr />
-    <h1>Video Indexing App</h1>
-    <hr />
-    <div id="app" />
-    <h2>Please Choose a Video</h2>
-    <input id="videoupload" type="file" accept="video/*" />
-    <hr />
-    <button id="addVideo" onclick="uploadVideo()">Upload the Video</button>
-    <hr />
-    <div id="video"></div>
-    <div id="video-status"></div>
-    <hr />
-    <div id="jobid"></div>
-    <div id="status"></div>
-    </body>
+
+<div class="app-container">
+
+<h1>AI Video Analyzer</h1>
+
+<div class="preview-box">
+
+<div id="videoPreview">
+<p id="noVideoText">No video selected</p>
+</div>
+
+</div>
+
+<div class="button-panel">
+
+<input id="videoupload" type="file" accept="video/*" hidden onchange="previewVideo()">
+
+<button onclick="document.getElementById('videoupload').click()">
+Find Video
+</button>
+
+<button onclick="uploadVideo()">
+Submit Video
+</button>
+
+</div>
+
+<div class="panel">
+
+<h3>Processing Status</h3>
+
+<div id="jobid"></div>
+<div id="status"></div>
+
+</div>
+
+<div class="panel">
+
+<h3>Results</h3>
+
+<div id="results"></div>
+
+</div>
+
+</div>
+
+</body>
 </html>

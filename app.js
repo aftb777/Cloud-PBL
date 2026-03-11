@@ -1,15 +1,9 @@
-
-//Account ID From Website
 var accountID  = ''
 
-// Access Token to be generated
 var accessToken=''
 
-// Subscription Key
 var subscriptionKey = ''
 
-
-// Start the Video Upload to Azure Video Analyzer
 async function uploadVideo() {
     var files = document.getElementById("videoupload").files;
     if (!files.length) {
@@ -40,10 +34,8 @@ async function uploadVideo() {
     
 }
 
-//Make the File Upload to Azure Video Analyzer
 function transferComplete(event) {
     var results = JSON.parse(event.currentTarget.responseText)
-    //console.log(results.id)
     console.log(results)
     alert("Successfully uploaded video.");
     viewVideo(results.id)
@@ -53,25 +45,50 @@ function transferComplete(event) {
     document.getElementById("jobid").insertAdjacentHTML('afterend', html);
 }
 
-
-// Show Video in Web page
 function viewVideo(videoKey) {
-    document.getElementById("video-status").insertAdjacentHTML('afterbegin', "<h3>Loading...</h3>");
 
-    axios({
-        method: 'get',
-        url: 'https://api.videoindexer.ai/trial/Accounts/'+accountID+'/Videos/'+videoKey+'/SourceFile/DownloadUrl?accessToken='+accessToken,
-      }).then(function (response) {
-        var html = `<video width="320" height="240" controls>
-                    <source src="${response.data}" type="video/mp4">
-                  </video>`
-      document.getElementById("video-status").remove();
-      document.getElementById("video").insertAdjacentHTML('afterbegin', html);
+axios({
+  method:'get',
+  url:'https://api.videoindexer.ai/trial/Accounts/'+accountID+'/Videos/'+videoKey+'/SourceFile/DownloadUrl?accessToken='+accessToken,
+}).then(function(response){
 
-    });
+document.getElementById("noVideoText").style.display="none";
+
+var html = `
+<video controls>
+<source src="${response.data}" type="video/mp4">
+</video>
+`;
+
+document.getElementById("videoPreview").innerHTML = html;
+
+});
+
 }
 
-// Check Video Indexing Results
+function previewVideo(){
+
+let fileInput = document.getElementById("videoupload");
+let file = fileInput.files[0];
+
+if(file){
+
+document.getElementById("noVideoText").style.display="none";
+
+let videoURL = URL.createObjectURL(file);
+
+let html = `
+<video controls>
+<source src="${videoURL}" type="video/mp4">
+</video>
+`;
+
+document.getElementById("videoPreview").innerHTML = html;
+
+}
+
+}
+
 async function getVideoIndex(videoId) {
 
   var html = '';
@@ -85,17 +102,13 @@ async function getVideoIndex(videoId) {
     } else {
       console.log(response.data.summarizedInsights)
 
-      //html = processResults(response.data.summarizedInsights)
       html = "Processed"
-        
-      
+            
     }
     document.getElementById("status").insertAdjacentHTML('beforeend', html);
   });
 }
 
-
-// Process Video Indexing results for a user friendly format
 function processResults(jsonObject){
 
   var html = ""
