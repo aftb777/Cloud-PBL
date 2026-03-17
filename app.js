@@ -14,7 +14,7 @@ async function uploadVideo() {
 
     await axios({
         method: 'get',
-        url: 'https://api.videoindexer.ai/Auth/trial/Accounts/'+accountID+'/AccessToken?allowEdit=true',
+        url: 'YOUR API KEY'+accountID+'/AccessToken?allowEdit=true',
         headers: {'Ocp-Apim-Subscription-Key': subscriptionKey},
       }).then(function (response) {
         accessToken = response.data
@@ -27,7 +27,7 @@ async function uploadVideo() {
 
     
     formData.append("file", file);                                
-    req.open("POST", 'https://api.videoindexer.ai/trial/Accounts/'+accountID+'/Videos?name='+videoKey+'&privacy=Public&accessToken='+accessToken);
+    req.open("POST", 'YOUR API KEY'+accountID+'/Videos?name='+videoKey+'&privacy=Public&accessToken='+accessToken);
     req.send(formData);
     
     req.addEventListener("load", transferComplete);
@@ -49,7 +49,7 @@ function viewVideo(videoKey) {
 
 axios({
   method:'get',
-  url:'https://api.videoindexer.ai/trial/Accounts/'+accountID+'/Videos/'+videoKey+'/SourceFile/DownloadUrl?accessToken='+accessToken,
+  url:'YOUR API KEY'+accountID+'/Videos/'+videoKey+'/SourceFile/DownloadUrl?accessToken='+accessToken,
 }).then(function(response){
 
 document.getElementById("noVideoText").style.display="none";
@@ -94,7 +94,7 @@ async function getVideoIndex(videoId) {
   var html = '';
   await axios({
     method: 'get',
-    url: 'https://api.videoindexer.ai/trial/Accounts/'+accountID+'/Videos/'+videoId+'/Index?language=en-US&accessToken='+accessToken,
+    url: 'YOUR API KEY'+accountID+'/Videos/'+videoId+'/Index?language=en-US&accessToken='+accessToken,
   }).then(function (response) {
     console.log(response.data.state)
     if (response.data.state == 'Processing') {
